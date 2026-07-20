@@ -4,7 +4,7 @@ import 'package:online_exam_app/config/router/app_router.dart';
 import 'config/di/di.dart';
 import 'config/services/shared_prefs_service.dart';
 import 'core/theme/main_theme.dart';
-//test remote2
+//test remote3
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
