@@ -24,10 +24,12 @@ class AuthViewModel extends Cubit<AuthState>{
         emit(state.copyWith(
           loginState: state.loginState?.copyWith(isLoading: false, data: authResponse.data)
         ));
+        break;
       case ErrorResponse<AuthResponse>():
         emit(state.copyWith(
             loginState: state.loginState?.copyWith(isLoading: false, errMessage: authResponse.errMessage)
         ));
+        break;
         // emit(state.copyWith(isLoading: false, errorMessage: authResponse.errMessage));
 }  }
 
@@ -41,10 +43,12 @@ class AuthViewModel extends Cubit<AuthState>{
        emit(state.copyWith(
            registerState: state.registerState?.copyWith(isLoading: false, data: authResponse.data)
        ));
+       break;
      case ErrorResponse<AuthResponse>():
        emit(state.copyWith(
            registerState: state.registerState?.copyWith(isLoading: false, errMessage: authResponse.errMessage)
        ));
+       break;
    }
 
   }

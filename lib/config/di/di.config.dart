@@ -26,6 +26,7 @@ import '../../features/auth/domain/use_case/register_use_case.dart' as _i463;
 import '../../features/auth/presentation/view_model/auth_view_model.dart'
     as _i1025;
 import '../dio/dio_module.dart' as _i977;
+import '../services/secure_storage_service.dart' as _i451;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -40,14 +41,18 @@ extension GetItInjectableX on _i174.GetIt {
       () => gitItModule.providePrettyDioLogger,
     );
     gh.singleton<_i361.Dio>(() => gitItModule.provideDio);
-    gh.singleton<_i213.AuthApiClient>(
-      () => _i213.AuthApiClient(gh<_i361.Dio>(), baseUrl: gh<String>()),
+    gh.singleton<_i213.AuthApiClient>(() => gitItModule.provideApiServices);
+    gh.lazySingleton<_i451.SecureStorageService>(
+      () => _i451.SecureStorageService(),
     );
     gh.lazySingleton<_i548.AuthRemoteDataSource>(
       () => _i321.AuthRemoteDataSourceImpl(gh<_i213.AuthApiClient>()),
     );
     gh.lazySingleton<_i170.AuthRepo>(
-      () => _i984.AuthRepoImpl(gh<_i548.AuthRemoteDataSource>()),
+      () => _i984.AuthRepoImpl(
+        gh<_i548.AuthRemoteDataSource>(),
+        gh<_i451.SecureStorageService>(),
+      ),
     );
     gh.lazySingleton<_i973.LoginUseCase>(
       () => _i973.LoginUseCase(gh<_i170.AuthRepo>()),

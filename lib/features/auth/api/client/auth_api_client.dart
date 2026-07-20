@@ -8,7 +8,7 @@ import '../../data/models/request/register/register_request_dto.dart';
 import '../../data/models/response/auth_response_dto.dart';
 
 part 'auth_api_client.g.dart';
-@singleton
+// @singleton
 @RestApi(baseUrl: ApiConstants.baseUrl)
 abstract class AuthApiClient {
   @factoryMethod

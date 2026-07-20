@@ -10,8 +10,8 @@ class AuthState{
     this.loginState,
     this.registerState,
   }) {
-    loginState =loginState ??  BaseState<AuthResponse>( isLoading:  true);
-    registerState= registerState ??  BaseState<AuthResponse>( isLoading:  true);
+    loginState =loginState ??  BaseState<AuthResponse>( isLoading:  false);
+    registerState= registerState ??  BaseState<AuthResponse>( isLoading:  false);
   }
 
  AuthState copyWith(

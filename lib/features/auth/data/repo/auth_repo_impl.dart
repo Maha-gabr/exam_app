@@ -3,13 +3,15 @@ import 'package:online_exam_app/features/auth/domain/entity/request/login/login_
 import 'package:online_exam_app/features/auth/domain/entity/request/register/register_request.dart';
 import 'package:online_exam_app/features/auth/domain/entity/response/auth_response.dart';
 import '../../../../config/base_response/base_response.dart';
+import '../../../../config/services/secure_storage_service.dart';
 import '../../domain/repo/auth_repo.dart';
 import '../data_source/remote/auth_remote_data_source.dart';
 import '../models/response/auth_response_dto.dart';
 @LazySingleton(as: AuthRepo)
 class AuthRepoImpl implements AuthRepo{
   final AuthRemoteDataSource _authRemoteDataSource;
-  const AuthRepoImpl(this._authRemoteDataSource);
+  final SecureStorageService _secureStorageService;
+  const AuthRepoImpl(this._authRemoteDataSource, this._secureStorageService);
 
   @override
   Future<BaseResponse<AuthResponse>> login(LoginRequest loginRequest) async {
@@ -18,7 +20,7 @@ class AuthRepoImpl implements AuthRepo{
    switch (authResponse) {
      case SuccessResponse<AuthResponseDto>():
        final AuthResponse authResponseEntity = authResponse.data.toDomain();
-
+       _secureStorageService.saveToken(authResponseEntity.token??'');
        return SuccessResponse<AuthResponse>(authResponseEntity);
 
      case ErrorResponse<AuthResponseDto>():
@@ -45,7 +47,7 @@ class AuthRepoImpl implements AuthRepo{
     switch (authResponse) {
       case SuccessResponse<AuthResponseDto>():
         final AuthResponse authResponseEntity = authResponse.data.toDomain();
-
+        _secureStorageService.saveToken(authResponseEntity.token??'');
         return SuccessResponse<AuthResponse>(authResponseEntity);
 
       case ErrorResponse<AuthResponseDto>():
@@ -54,7 +56,7 @@ class AuthRepoImpl implements AuthRepo{
         );
     }
 
-    // savetoken
+    // save token
     //check for internet connection X
     //make function call from datasource
     //2 cases (success, error) X
